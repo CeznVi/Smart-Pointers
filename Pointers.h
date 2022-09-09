@@ -4,19 +4,31 @@ template<class T>
 class SmartPointer
 {
 protected:
-	T* ptr;
-
+	T* ptr = nullptr;
+	
 public:
-	SmartPointer(T* p = nullptr) : ptr(p) {}
-	~SmartPointer() { delete ptr; }
+	explicit SmartPointer(T* p = nullptr)
+	{
+		this->ptr = p;
+		cout << "Робота конструктора Ptr\n";
+	}
+	//SmartPointer(T* p = nullptr) : ptr(p) 
+	//{
+	//	cout << "Робота конструктора розумноно покажчика\n";
+	//}
+	~SmartPointer()
+	{ 
+		delete this->ptr; 
+		cout << "Робота деструктора розумноно покажчика\n";
+	}
 	SmartPointer(SmartPointer& p)
 	{
-		ptr = new T;
-		*ptr = *p.ptr;
+		this->ptr = new T;
+		*(this->ptr) = *p.ptr;
 	}
 	SmartPointer(SmartPointer&& p)
 	{
-		ptr = p.ptr;
+		this->ptr = p.ptr;
 		p.ptr = nullptr;
 	}
 	SmartPointer& operator=(const SmartPointer& p)
@@ -24,10 +36,10 @@ public:
 		if (this == &p)
 			return *this;
 
-		delete ptr;
+		delete this->ptr;
 
-		ptr = new T;
-		*ptr = *p.ptr;
+		this->ptr = new T;
+		*(this->ptr) = *p.ptr;
 
 		return *this;
 	}
@@ -36,95 +48,30 @@ public:
 		if (this == &p)
 			return *this;
 
-		delete ptr;
+		delete this->ptr;
 
-		ptr = p.ptr;
+		this->ptr = p.ptr;
 		p.ptr = nullptr;
 
 		return *this;
 	}
 	T& operator*() { return *ptr; }
-	T* operator->() { return ptr; }
-	bool isEmpty() { return ptr == nullptr; }
+	T* operator->() { return this->ptr; }
+	bool isEmpty() { return this->ptr == nullptr; }
 };
 
 template<class T>
-class UniqPtr
+class UniqPtr : public SmartPointer <T>
 {
-protected:
-	T* ptr;
 
 public:
-	UniqPtr(T* p = nullptr) : ptr(p) { cout << "Робота конструктора UniqPtr\n"; }
-	~UniqPtr() 
-	{
-		cout << "Робота деструктора UniqPtr\n";
-		delete ptr; 
-	
-	}
-	UniqPtr(const UniqPtr& p)
-	{
-		cout << "Робота конструктора копіювання\n";
-		ptr = new T;
-		*ptr = *p.ptr;
-	}
-	UniqPtr(UniqPtr&& p)
-	{
-		cout << "Робота конструктора переміщення\n";
-		ptr = p.ptr;
-		p.ptr = nullptr;
-	}
-
-	//UniqPtr& operator=(UniqPtr& p) = delete;
-
-	//UniqPtr& operator=(UniqPtr& p)
+	//UniqPtr(T* p = nullptr)
 	//{
-	//	cout << "Робота оператора присвоення L-value\n";
-	//	if (this == &p)
-	//		return *this;
-
-	//	delete ptr;
-
-	//	ptr = new T;
-	//	*ptr = *p.ptr;
-
-	//	return *this;
-
+	//	this->ptr = p;
+	//	cout << "Робота конструктора UniqPtr\n";
 	//}
 
-	UniqPtr& operator=(UniqPtr& p)
-	{
-		cout << "Робота оператора присвоення L-value\n";
-		if (this == &p)
-			return *this;
+	virtual UniqPtr& operator=(const UniqPtr& p) = delete;
 
-		delete ptr;
-
-		ptr = move(p.ptr);
-		p.ptr = nullptr;
-
-		return *this;
-
-	}
-
-	UniqPtr& operator=(UniqPtr&& p) noexcept
-	{
-		cout << "Робота оператора присвоення R-value\n";
-		if (this == &p)
-			return *this;
-
-		delete ptr;
-
-		ptr = p.ptr;
-		p.ptr = nullptr;
-
-		return *this;
-	}
-	T& operator*() { return *ptr; }
-	T* operator->()
-	{ 
-		if (ptr)
-			return ptr;
-	}
-	bool isEmpty() { return ptr == nullptr; }
 };
+

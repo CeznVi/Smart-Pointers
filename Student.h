@@ -123,7 +123,7 @@ void Student::setMark(int m)
 void Student::save(ofstream& out)
 {
 	out.write((char*)this, sizeof(Student));
-	int len = strlen(this->name);
+	size_t len = strlen(this->name);
 	out.write((char*)&len, sizeof(int));
 	out.write((char*)this->name, len);
 	for (size_t i = 0; i < this->sizeMark; i++)

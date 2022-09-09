@@ -127,10 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Library\Func.cpp" />
     <ClCompile Include="Smart-Pointers.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Library\Func.h" />
     <ClInclude Include="Pointers.h" />
+    <ClInclude Include="Student.h" />
+    <ClInclude Include="temp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

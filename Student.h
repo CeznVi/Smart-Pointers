@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 #include<fstream>
-#include"../Library/Func.h"
+#include"Library/Func.h"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ Student::Student(const char* n, int a)
 
 inline Student::Student(const Student& obj)
 {
-	cout << "Copy constuctur" << endl;
+	cout << "Конструктор копіювання студента" << endl;
 	this->setName(obj.name);
 	this->age = obj.age;
 	this->sizeMark = obj.sizeMark;
@@ -71,11 +71,11 @@ Student& Student::operator=(const Student& obj)
 
 Student::~Student()
 {
+	cout << "Деструктор студента " << name << endl;
 	delete name;
 	name = nullptr;
 	delete[] mark;
 	mark = nullptr;
-	cout << "Destructor" << endl;
 }
 
 void Student::print() const

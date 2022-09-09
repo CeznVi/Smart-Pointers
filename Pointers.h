@@ -1,9 +1,12 @@
 #pragma once
 
+
+
 template<class T>
 class SmartPointer
 {
-	T* ptr;
+protected:
+	T* ptr = nullptr;
 
 public:
 	SmartPointer(T* p = nullptr) : ptr(p) {}
@@ -45,4 +48,14 @@ public:
 	T& operator*() { return *ptr; }
 	T* operator->() { return ptr; }
 	bool isEmpty() { return ptr == nullptr; }
+
+};
+
+template<class T>
+class UniqPtr : public SmartPointer<T>
+{
+
+//public:
+
+
 };

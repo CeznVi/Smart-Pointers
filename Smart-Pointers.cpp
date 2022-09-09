@@ -15,40 +15,46 @@ int main()
 
 
     ////Тест ЮнікПТР
-    
+    {
+        //SmartPointer<Student> pp = new Student("Петро Смартович", 55);
+        //SmartPointer<Student> p = new Student("Петро Унікович", 55);
+        //SmartPointer <Student> p1;
 
-    UniqPtr <Student> p = new Student("Петро Олексійович", 55);
-    //UniqPtr <Student> p1;
 
-
-        std::cout << "Is empty p = " << p.isEmpty() << '\n';
+        //std::cout << "Is empty p = " << p.isEmpty() << '\n';
         //std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
         //move ф-ція з простору імен СТД (робить об'кт R-value, та спрацьовує оператор переносу)
         //p1 = move(p);
         //ERROR!!
         //p1 = p;
-        cout << "P print =";
-        if (!p.isEmpty())
-            p->print();
-        else
-            cout << "= nullptr";
-    //cout << "\nP1 print = ";
-    //p1->print();
-    //std::cout << "Is empty p = " << p.isEmpty() << '\n';
-    //std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
-
+        //cout << "P print =";
+        //if (!p.isEmpty())
+        //    p->print();
+        //else
+        //    cout << "= nullptr";
+        //cout << "\nP1 print = ";
+        //p1->print();
+        //std::cout << "Is empty p = " << p.isEmpty() << '\n';
+        //std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
+    }
 
 
     ////Тест ШаредПТР
-    //{
-    //    UniqPtr<Student> p = new Student("Петро Олексійович", 55);
-    //    UniqPtr<Student> p1;
+    {
+        UniqPtr<Student> p = new Student("Петро Олексійович", 55);
+        UniqPtr<Student> p1;
 
-    //    std::cout << "Is empty p = " << p.isEmpty() << '\n';
-    //    std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
+        std::cout << "Is empty p = " << p.isEmpty() << '\n';
+        std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
+        
+        ////ERROR!
+        ////p1 = p;
+    
+        p1 = move(p);
+        std::cout << "Is empty p = " << p.isEmpty() << '\n';
+        std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
 
-
-    //}
+    }
 
     return 0;
 }

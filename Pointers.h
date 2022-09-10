@@ -10,15 +10,13 @@ public:
 	SmartPointer(T* p = nullptr)
 	{
 		this->ptr = p;
-		cout << "Робота конструктора SmartPointer\n";
 	}
 	~SmartPointer()
 	{ 
-		if (!ptr)
-			return;
+		//if (!ptr)
+		//	return;
 
 		delete this->ptr; 
-		cout << "Робота деструктора розумноно покажчика SmartPointer\n";
 	}
 	SmartPointer(SmartPointer& p)
 	{
@@ -67,7 +65,6 @@ public:
 	UniqPtr(T* p = nullptr)
 	{
 		this->ptr = p;
-		cout << "Робота конструктора UniqPtr\n";
 	}
 	UniqPtr(const UniqPtr& obj) = delete;
 	UniqPtr& operator=(const UniqPtr& p) = delete;
@@ -98,3 +95,79 @@ T* UniqPtr<T>::get() const noexcept
 {
 	return this->ptr ? this->ptr: NULL;
 }
+
+
+template<class T>
+class SharedPtr 
+{
+	//лічильник
+	size_t* count = nullptr;
+	T* ptr = nullptr;
+
+public:
+	SharedPtr(T* p = nullptr)
+	{
+		this->ptr = p;
+		this->count = new size_t(1);
+	}
+	~SharedPtr() { this->clear(); }
+	SharedPtr(const SharedPtr& p)
+	{
+		this->ptr = p.ptr;
+		this->count = p.count;
+
+		if (count)
+			++* count;
+	}
+	SharedPtr(SharedPtr&& p)
+	{
+		this->ptr = p.ptr;
+		this->count = p.count;
+
+		p.ptr = nullptr;
+		p.count = nullptr;
+	}
+	T* operator->() const noexcept { return get(); }
+	T& operator*() const noexcept { return *get(); }
+	SharedPtr& operator= (const SharedPtr<T>& p)
+	{
+		if (this == &p)
+			return *this;
+		
+		if(this != &p)
+			this->clear();
+
+		this->ptr = p.ptr;
+		this->count = p.count;
+
+		if (count)
+			++*count;
+
+		return *this;
+	}
+	//Метод очистки
+	void clear()
+	{
+		if (!count)
+			return;
+
+		--*count;
+
+		if (!(*count))
+		{
+			delete this->ptr;
+			delete this->count;
+			cout << "Видалення птр та коунт\n";
+		}
+		else
+		{
+			this->ptr = nullptr;
+			this->count = nullptr;
+		}
+	}
+	bool isEmpty() { return this->ptr == nullptr; }
+	T* get() const noexcept { return this->count ? this->ptr : NULL; }
+	size_t get_count() const noexcept { return this->count ? *count : NULL; }
+
+
+};

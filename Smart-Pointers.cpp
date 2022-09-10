@@ -19,8 +19,6 @@ int main()
         //SmartPointer<Student> pp = new Student("Петро Смартович", 55);
         //SmartPointer<Student> p = new Student("Петро Унікович", 55);
         //SmartPointer <Student> p1;
-
-
         //std::cout << "Is empty p = " << p.isEmpty() << '\n';
         //std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
         //move ф-ція з простору імен СТД (робить об'кт R-value, та спрацьовує оператор переносу)
@@ -41,19 +39,20 @@ int main()
 
     ////Тест ШаредПТР
     {
-        UniqPtr<Student> p = new Student("Петро Олексійович", 55);
-        UniqPtr<Student> p1;
-
-        std::cout << "Is empty p = " << p.isEmpty() << '\n';
-        std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
-        
-        ////ERROR!
-        ////p1 = p;
-    
-        p1 = move(p);
-        std::cout << "Is empty p = " << p.isEmpty() << '\n';
-        std::cout << "Is empty p1 = " << p1.isEmpty() << '\n';
-
+        //UniqPtr<Student> p = new Student("Петро Олексійович", 55);
+        //UniqPtr<Student> p1;
+        //std::cout << "Чи пустий покажчик p = " << p.isEmpty() << '\n';
+        //std::cout << "Чи пустий покажчик p1 = " << p1.isEmpty() << '\n';
+        //std::cout << "Перевірка метода гет р: " << p.get() << '\n';
+        //std::cout << "Перевірка метода гет р1: " << p1.get() << '\n';
+        //std::cout << "Робимо мув\n";
+        //////ERROR!
+        //////p1 = p;
+        //p1 = move(p);
+        //std::cout << "Чи пустий покажчик p = " << p.isEmpty() << '\n';
+        //std::cout << "Чи пустий покажчик p1 = " << p1.isEmpty() << '\n';
+        //std::cout << "Перевірка метода гет р: " << p.get() << '\n';
+        //std::cout << "Перевірка метода гет р1: " << p1.get() << '\n';
     }
 
     return 0;

@@ -10,16 +10,15 @@ public:
 	SmartPointer(T* p = nullptr)
 	{
 		this->ptr = p;
-		cout << "Робота конструктора Ptr\n";
+		cout << "Робота конструктора SmartPointer\n";
 	}
-	//SmartPointer(T* p = nullptr) : ptr(p) 
-	//{
-	//	cout << "Робота конструктора розумноно покажчика\n";
-	//}
 	~SmartPointer()
 	{ 
+		if (!ptr)
+			return;
+
 		delete this->ptr; 
-		cout << "Робота деструктора розумноно покажчика Ptr\n";
+		cout << "Робота деструктора розумноно покажчика SmartPointer\n";
 	}
 	SmartPointer(SmartPointer& p)
 	{
@@ -70,39 +69,32 @@ public:
 		this->ptr = p;
 		cout << "Робота конструктора UniqPtr\n";
 	}
-
 	UniqPtr(const UniqPtr& obj) = delete;
 	UniqPtr& operator=(const UniqPtr& p) = delete;
-
 	UniqPtr& operator = (UniqPtr<T>&& p) noexcept
 	{
 		reset(p.release());
 		return *this;
 	}
-
-
-
 	UniqPtr(UniqPtr<T>&& p) noexcept 
 	{
 		this->ptr(p.release());
 	}
-
-
-
-
 	T* release() {
 		T* tmp = this->ptr;
 		this->ptr = nullptr;
 		return tmp;
 	}
-
 	void reset(T* p) {
 		delete this->ptr;
 		this->ptr = p;
 	}
-
-
-
+	T* get() const noexcept;
 
 };
 
+template<class T>
+T* UniqPtr<T>::get() const noexcept
+{
+	return this->ptr ? this->ptr: NULL;
+}
